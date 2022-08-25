@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DrivenAdapters.Sql\DrivenAdapters.Sql.csproj" />
+    <ProjectReference Include="..\Helpers.Commons\Helpers.Commons.csproj" />
+  </ItemGroup>
+
+</Project>
