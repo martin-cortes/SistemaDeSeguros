@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Domain.Model.DTOs;
 using Domain.Model.Entities;
+using Domain.Model.General;
 using DrivenAdapters.Sql.Contexts;
+using Helpers.Commons;
 using Helpers.Commons.CustomBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -59,6 +61,13 @@ namespace UseCase.Logica.Usuarios
                 var edadUsuario = hoy - creacionUsuarioDTO.FechaNacimineto;
                 bool existeUsuario = await _context.Usuarios.AnyAsync(x => x.Cedula == creacionUsuarioDTO.Cedula);
                 bool existeEmail = await _context.Usuarios.AnyAsync(x => x.Email == creacionUsuarioDTO.Email);
+                string emailOrigen = "";
+                string pass = "";
+                string asunto = "Registro Exitoso";
+                string cuerpo = "Gracias por registrarse en Sistema De Seguros ;)";
+
+
+                RemitenteCorreo enviarCorreo = new RemitenteCorreo(emailOrigen, creacionUsuarioDTO.Email, pass, asunto, cuerpo);
 
                 if (existeUsuario)
                 {
@@ -74,7 +83,8 @@ namespace UseCase.Logica.Usuarios
                 }
                 else
                 {
-                    return await Post<CreacionUsuarioDTO, Usuario>(creacionUsuarioDTO);
+                    enviarCorreo.EnviarCorreo();
+                    return await Post<CreacionUsuarioDTO, Usuario>(creacionUsuarioDTO); 
                 }
 
             }
